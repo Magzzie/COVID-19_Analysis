@@ -2,7 +2,7 @@ CREATE TABLE total_data (
  id_row INT NOT NULL,
  iso_code TEXT,
  continent TEXT NULL,
- location TEXT,
+ country TEXT,
  date DATE NOT NULL,
  total_cases FLOAT NULL,
  new_cases FLOAT NULL,
@@ -67,5 +67,5 @@ CREATE TABLE total_data (
  excess_mortality_cumulative_absolute FLOAT NULL,
  excess_mortality_cumulative FLOAT NULL,
  excess_mortality FLOAT NULL,
- excess_mortality_cumulative_per_million FLOAT NULL 
+ excess_mortality_cumulative_per_million FLOAT NULL
 );

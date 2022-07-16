@@ -70,7 +70,7 @@ CREATE TABLE total_data (
  excess_mortality_cumulative_per_million FLOAT NULL
 );
 
-CREATE TABLE countries_data (
+CREATE TABLE all_countries_data (
  id_row INT NOT NULL,
  iso_code TEXT,
  continent TEXT NULL,
@@ -112,7 +112,6 @@ CREATE TABLE countries_data (
  total_boosters FLOAT NULL,
  new_vaccinations FLOAT NULL,
  new_vaccinations_smoothed FLOAT NULL,
- total_vaccinations_smoothed FLOAT NULL,
  total_vaccinations_per_hundred FLOAT NULL,
  people_vaccinated_per_hundred FLOAT NULL,
  people_fully_vaccinated_per_hundred FLOAT NULL,
@@ -256,7 +255,6 @@ CREATE TABLE cases_data (
  total_boosters FLOAT NULL,
  new_vaccinations FLOAT NULL,
  new_vaccinations_smoothed FLOAT NULL,
- total_vaccinations_smoothed FLOAT NULL,
  total_vaccinations_per_hundred FLOAT NULL,
  people_vaccinated_per_hundred FLOAT NULL,
  people_fully_vaccinated_per_hundred FLOAT NULL,

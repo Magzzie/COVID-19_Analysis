@@ -1,12 +1,7 @@
 # COVID-19 Analysis
 
 ## COVID-19 Overview
-#### As COVID-19 persists throughout the globe, the purpose of this exploration 
-is to determine the relationship between different factors that contribute to the 
-spread of COVID-19 as well as the outcomes noted by people across the world. By 
-analyzing these health outcomes, the goal is ultimately to predict the health 
-outcomes in future populations based on the factors determined significant by the 
-machine learning model utilized below. 
+#### As COVID-19 persists throughout the globe, the purpose of this exploration is to determine the relationship between different factors that contribute to the spread of COVID-19 as well as the outcomes noted by people across the world. By analyzing these health outcomes, the goal is ultimately to predict the health outcomes in future populations based on the factors determined significant by the machine learning model utilized below. 
 
 The data utilized for the analysis is from Our World in Data, which is an 
 organization that focuses on researching international crises including issues 
@@ -39,18 +34,12 @@ locations column was filtered to show the desired data and the null values were
 dropped for columns total_cases and total_deaths.
 
 ## Database 
-The original data was cleaned and edited to create a sample database with a 
-smaller amount of data. For The database, AWS was employed to allow universal 
-access to all team members. The dataset was imported, cleaned, and transformed 
-into a dataframe with only the iso_code, total_cases, and total_deaths columns 
-for the first phase of the project. AWS was then connected to PgAdmin to run the 
-database locally. A schema was created for the sample_data table. Please see the 
-sample_database_schema file or the image below for reference. A sample query was 
-also completed as indicated in the image below.
+Utilizing AWS, an RDS instance was created to access the data file located in an S3 bucket. PySpark was then used to load the data and create a column was added to act as an identifier for the various rows of data (“id_row”). Following, the data type of the “date” column was changed to accurately indicate the date data type. From there, the data was split into two dataframes (cases_data and demos_data) to reflect data relating to the COVID-19 cases and the data relating to the demographics of individuals diagnosed with COVID-19, respectively. Lastly, PySpark was used again to load the dataframes into Postgres tables.
 
-![Sample Database](https://user-images.githubusercontent.com/99554642/
-177604250-ea2a1d7e-8896-444f-a369-b0a1098cf798.png)
+Using Postgres, the cases_data and demos_data tables were joined on the “id_row” column with a full outer join into the table combined_COVID_data. The data was filtered to only include valid countries within the location column and loaded into the table all_countries_data. A connection was made from the database to the next phase of analysis-the machine learning component. Please see the ERD below for the relationship between tables.
 
+
+[[LINK TO ERD IMAGE]]
 
 
 ## Machine Learning Model

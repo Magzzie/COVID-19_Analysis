@@ -32,15 +32,14 @@ WHERE location NOT IN ('Africa', 'Asia', 'Europe',
 				  'Lower middle income', 'Upper middle income',
 				  'European Union', 'International', 'World');
 
---Putting only countries with a population > 1000000 into coutnrues_data
-INSERT INTO countries_data
-SELECT * FROM total_data
+--Putting only countries with a population > 1000000 into all_coutnrues_data
+INSERT INTO all_countries_data
+SELECT * FROM combined_COVID_data
 WHERE location NOT IN ('Africa', 'Asia', 'Europe', 
 				  'North America', 'Oceania', 'South America',
 				  'High income', 'Low income', 'Northern Cyprus',
 				  'Lower middle income', 'Upper middle income',
-				  'European Union', 'International', 'World')
-AND population > 1000000;
+				  'European Union', 'International', 'World');
 
 --Joining cases_data and demos_data into combined_COVID_data
 CREATE TABLE combined_COVID_data as

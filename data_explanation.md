@@ -9,7 +9,7 @@ The complete COVID-19 dataset is a collection of the COVID-19 data maintained by
 
 The dataset includes all of the historical data on the pandemic up to the date of publication/ collection.<br>
 
-Here is a list of variables we will include in our machine learning and neural network prediction models: 
+**Here is a list of variables we will include in our machine learning and neural network prediction models:** 
 
 | Variable | Description |
 | --- | --- |
@@ -72,7 +72,7 @@ Here is a list of variables we will include in our machine learning and neural n
 |**life_expectancy**| Life expectancy at birth in 2019.|
 |**human_development_index**| A composite index measuring average achievement in three basic dimensions of human development—a long and healthy life, knowledge and a decent standard of living. Values for 2019, imported from [hdr.undp.org](http://hdr.undp.org/en/indicators/137506).|
 
-Here is a list of variables we will *not* include in our machine learning or neural network prediction models: 
+**Here is a list of variables we will *not* include in our machine learning or neural network prediction models:**
 - Excess mortality variables: describe the differences between reported and projected numbers of deaths.
     - excess_mortality
     - excess_mortality_cumulative
@@ -106,7 +106,7 @@ Here is a list of variables we will *not* include in our machine learning or neu
 
 
 ## Data Changelog
-Here are some important dates relating to the included variables detailed by the OWID team:
+**Here are some important dates relating to the included variables, detailed by the OWID team:**
 - Up until 17 March 2020, we were using WHO data manually extracted from their daily [situation report PDFs](https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports).
 - From 19 March 2020, we started relying on data published by the [European CDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide). 
 - On 9 May 2020, we added new variables related to demographic, economic, and public health data to our complete dataset.
@@ -129,7 +129,8 @@ Here are some important dates relating to the included variables detailed by the
 - Since 29 March 2022, vaccination data is no longer updated on a daily basis. Updates now are only on weekdays (Monday until Friday).
 
 
-## Notes written by the OWID team
+## Notes 
+**This notes are provided by the OWID team**
 - Confirmed cases and deaths are collected by Johns Hopkins University by date of report, rathen than date of test/death. Therefore the number they report on a given day does not necessarily represent the actual number on that date, because of the long reporting chain that exists between a new case/death and its inclusion in statistics. This also means that time series can show sudden changes (negative or positive) when a country corrects historical data, because it had previously under- or overestimated the number of cases/deaths.
 - In rare cases where our source for confirmed cases & deaths reports a negative daily change due to a data correction, we set the corresponding metric (new_cases or new_deaths) to NA. This also means that rolling metrics (7-day rolling average, weekly rolling sum, biweekly rolling sum) are set to NA until this missing value leaves the rolling window.
 - Due to varying protocols and challenges in the attribution of the cause of death, the number of confirmed deaths may not accurately represent the true number of deaths caused by COVID-19.

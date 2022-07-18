@@ -31,7 +31,8 @@ Studio Code 1.65.0
 ## Data Processing
 The raw data was put into a DataFrame in Jupyter Notebook to be viewed.  The 
 locations column was filtered to show the desired data and the null values were 
-dropped for columns total_cases and total_deaths.
+dropped for columns total_cases and total_deaths. Another DataFrame was made from this to show
+the desired two years of COVID data for locations with more than 730 records.
 
 ## Database 
 Utilizing AWS, an RDS instance was created to access the data file located in an S3 bucket. PySpark was then used to load the data and create a column was added to act as an identifier for the various rows of data (“id_row”). Following, the data type of the “date” column was changed to accurately indicate the date data type. From there, the data was split into two dataframes (cases_data and demos_data) to reflect data relating to the COVID-19 cases and the data relating to the demographics of individuals diagnosed with COVID-19, respectively. Lastly, PySpark was used again to load the dataframes into Postgres tables.

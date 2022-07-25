@@ -68,18 +68,16 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
 - The raw metadata in the dataset included information about the total and new cases of COVID-19, total and new COVID-related deaths, hospitals' ICUs capacity and admissions, COVID-19 screening tests counts and results, numbers of vaccinations and boosters plus rates of  people vaccinated. Additionally, the dataset had various demographic, health, social, and economic criteria of the different countries.
 - There were 244 unique values in the OWID COVID-19 location column initially. These included more general aggregations of locations such as the six continents, four income levels, in addition to geopolitical grouping into European Union, Internation, and World. 
 - We Filtered the dataset excluding all the aforementioned groups which left us with 187,317 records of 231 distinct countries / territories. 
-- **Dropping Data**: 
+1. **Dropping Data**: 
     - Northern Cyprus did not have a population value in the OWID COVID-19 dataset. Therefore, it was dropped, bringing the dataset down to 187,000 records.
     - We removed all COVID-19 testing data since testing policies, availability, interpretation, and reporting were sporadic and varied significantly among countries. This step decreased the number of columns from 67 to 58.
     - Next, we dropped all columns related to calculated excess_mortality since they are not relevant to our predictions. This step had decreased the number of columns from 58 to 54. 
     - Then, we dropped the columns related to Intenstive Care Unit (ICU) and hospital admissions since they had very high number of null values (more than 85% null). That had brought the number of columns down to 46. 
     - Lastly, we dropped general columns such as the 'iso_code', 'continent', 'aged_70_older' because they held redundent information included in other columns. The final count of columns was 43.
-
-- **Handling Missing Values of Main Features in All Locations**: 
+2. **Handling Missing Values of Main Features in All Locations**: 
     - Since our goal was to predict the number of daily new cases in various locations of the world, we dropped all null values from the total_cases column then filled the new_cases nulls with zeros: There were 7,608 missing values out of 187,000 of the total number of COVID-19 cases from all locations. These missing values either represented no positive COVID-19 cases in that location, or missed reporting. Since we would construct a new column with reference to the number of COVID-19 number of days into the pandemic, we thought it would be redundent to keep these empty records with zero values. This step decreased the number of records to 179,392.
     - By dropping the missed values from total cases, we brought the missing values of new cases down from 7,889 to only 281. These few records might have represented actual zero new cases or simply missed reporting. However, since the corresponding total cases count of that location was not null, then it was probably the former cause. Hence, we decided to keep these records and fill them with zeros. 
-    	- The new_cases_smoothed column represented the past 7-day average of new COVID-19 cases. At that stage, it had 1,393 missing values. Upon further investigation, we discovered that the average was not calculated until the sixth day of the first COVID-19 cases in each location which would justify 1,150 null values for the 230 locations in the present population-based dataset. The remaining 243 missing averages could correspond with the missing new cases that we filled with zeros. In view of the big dataset we had, we decided to drop all records with missing averages for the past 7 days of new COVID-19 cases. That dropped the number of records to 177,999. 
-
+        - The new_cases_smoothed column represented the past 7-day average of new COVID-19 cases. At that stage, it had 1,393 missing values. Upon further investigation, we discovered that the average was not calculated until the sixth day of the first COVID-19 cases in each location which would justify 1,150 null values for the 230 locations in the present population-based dataset. The remaining 243 missing averages could correspond with the missing new cases that we filled with zeros. In view of the big dataset we had, we decided to drop all records with missing averages for the past 7 days of new COVID-19 cases. That dropped the number of records to 177,999. 
     - Death-related columns would only be features in the COVID-related deaths prediction model but not in the daily new cases prediction model.
     - In the OWID COVID-19 dataset, the column reproduction_rate: represents a real-time estimate of the effective reproduction rate (R) of COVID-19. There was no clear pattern that explains why there were (31,175) missing values of reproduction rate when it comes to location or total_cases values, hence, we dropped the missing values of the reproduction rate since replacing them with zeros might skew the data and influence the results. This step has decreased the number of records to 148,217, and the locations to 190 from 230.
     - **Vaccinations**: Out of 148,217 records, there were only 44,719 records with reported daily total vaccinations numbers from all 190 locations. Vaccination reports has started on 2020-12-02 till 2022-07-02. 
@@ -98,14 +96,53 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
 
 ### Machine Learning Model
 #### Feature Engineering & Data Preprocessing 
-- **Date Transformation**:
+1. **Date Transformation**:
     - We converted the 'date' column to a datetime.
     - The updated date range for the cleaned dataframe is from 2020-01-23 to 2022-03-28.
     - Next, we created a new column for days of COVID-19 and calculated its value from Jan 1, 2020 because that's the universal start date of the pandemic. The new column would reflect the number of days into the COVID-19 pandemic for each record of cases / vaccinations / deaths. 
     - Then, we swapped the covid_days and date columns in a new DataFrame.
-- 
+2. **Creating daily difference columns**:
+    - To be able to include the added daily vaccines for each location to the machine learning model's features instead of using a cumulative total number of vaccinations, we created a new column that represented the difference between daily total vaccinations. Them, we normalized the daily vaccinations per 100,000 people of the population of each location using a customized function.  
+    - Similarly, we created a difference column for the daily total people that were considered fully vaccinated on that day, and normalized it per 100,000 people of the location's population using a customized function. 
+    - Interestingly, we encountered negative values as a result of the difference calculations that took place in the previous two steps, which highlighted some missed gaps in cumulative numbers' reporting. Hence, we dropped the rows of missing values that constitued a total of (6348 + 3781 = 10129), bringing the dataset down to 112,069 records of 177 countries. 
+3. **Normalization**:
+    - Additionally, we normalized each of the following columns (total_cases, new_cases, total_vacciantions, people_fully_vaccinated) per 100,000 people of each location's population.
+    - The final count of the dataset put us at 112,069 records and 36 columns including deaths and outcome related unprocessed columns. 
+4. **Exporting Data**:
+    - We split the cleaned dataset into two dataframes: one for cases prediction and another for deaths predictions. 
+    - These new cleaned data files can be found here: [cases_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_pred.csv), [death_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/death_pred.csv).    
+    
 
 #### Creating Model
+
+
+## Results
+
+#### Data Processing and Features
+- Dates:
+    - The date of reporting carries a significant importance in the dataset, because it conveys the state of the COVID-19 pandemic in each location in comparison to other locations at the same timescale of the health crisis. It may also highlight chronoligcal relations between other variables in the dataset.
+    - The first announcement of COVID-19 infections was on December 31, 2019.
+    The World Health Organization China Country Office is informed of a number cases of pneumonia of unknown etiology (unknown cause) detected in Wuhan, Hubei Province.
+    - The OWID COVID-19 data entry started on January 1st, 2020 and has been daily updated till July 4th, 2022 when we pulled the dataset from the OWID/COVID-19-data GitHub Repository.
+    - Although COVID-19 infection did not appear in all locations of the world at the same time, it is important to compare the pandemic statue across locations at the same timescale.
+    - Based on that, we calculated the days passed between the first reporting of COVID-19 in the dataset, which is January 1st, 2020 and the date of the each record for each location.
+    - The analyzed time window in the cleaned dataset was between Jan 23rd, 2020, and Mar 28th, 2022. 
+
+
+
+
+
+
+
+#### Model Selection: Random Forest vs Deep Neural Network
+- Random Forest is a supervised ensemble learning model that combines decision trees to analyze input data.
+- Random Forest Regressors are a type of ensemble learning models that combines multiple smaller models into a more robust and accurate model.
+    - Random forest models use a number of weak learner algorithms (decision trees) and combine their output to make a final regression decision.
+    - Structurally speaking, random forest models are very similar to their neural network counterparts.
+    - Random forest models have been a staple in machine learning algorithms for many years due to their robustness and scalability.
+    - Both output and feature selection of random forest models are easy to interpret, and they can easily handle outliers and nonlinear data.
+
+
 
 
 ## COVID-19 Analysis Summary

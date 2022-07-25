@@ -109,8 +109,7 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
     - The final count of the dataset put us at 112,069 records and 36 columns including deaths and outcome related unprocessed columns. 
 4. **Exporting Data**:
     - We split the cleaned dataset into two dataframes: one for cases prediction and another for deaths predictions. 
-    - These new cleaned data files can be found here: [cases_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_pred.csv), [death_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/death_pred.csv).
-    
+    - These new cleaned data files can be found here: [cases_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_pred.csv), [death_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/death_pred.csv).    
     
 
 #### Creating Model
@@ -150,3 +149,5 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
 Used tableau to make representations of the cleaned cases_pred data set.
 Included tableau work book.
 https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/Story1?publish=yes
+
+---

@@ -62,3 +62,5 @@ Includes output labels for input data
 
 
 ## COVID-19 Analysis Summary
+## VIZ
+Used tableau to make representations of the cleaned cases_pred data set.

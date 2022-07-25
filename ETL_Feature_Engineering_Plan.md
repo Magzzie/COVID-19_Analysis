@@ -88,7 +88,8 @@ All the following calculations are possible if after dropping nulls in the raw n
 - **hospital_beds_per_100K** = hospital_beds_per_thousand * 100
 
 
-
+## Define Relevant Features
+- Drop the location and date columns 
 
 
 

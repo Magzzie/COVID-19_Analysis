@@ -43,7 +43,7 @@ Furthermore, we intend to build deep-learning regression neural networks with th
 14. Merge the predictions results table with the original dataset in SQL.
 15. Use Tableau to build a representative dashboard of the complete analysis. 
  
-## Resources
+## Resources utilized
 - Data Sources: owid-covid-data.csv, 
 - Software & Framework:Python (3.7.6) & (3.7.13), Jupyter Notebook (6.4.11), Anaconda (4.10.3) & (4.13.0), PostgreSQL (11.15-R1), pgAdmin4 (6.7), Spark (3.2.1), Visual Studio Code (1.65.0)
 - Libraries & Packages: 

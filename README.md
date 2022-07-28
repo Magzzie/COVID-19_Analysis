@@ -54,7 +54,7 @@ Furthermore, we intend to build deep-learning regression neural networks with th
 - The data was filtered to only include valid countries within the location column and loaded into the table all_countries_data.
 - A connection was made from the database to the next phase of analysis-the machine learning component.
 Please see the ERD for the relationship between tables.
-    |[ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Images/ERD.png)|
+    |![ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Images/ERD.png)|
     |-|
 
 
@@ -133,8 +133,21 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
 - Then, we used matplotlib library to visualize the predictions against the actual new cases per 100k from the testing subset, in addition to plotting the residuals of predictions for the whole *scaled* dataset. 
 - Finally, we scaled the whole dataset of 16 features and made predictions on them. Then, added the predictions and calculated residuals to the [features only dataframe](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/pred_cases_16_features_rfr.csv) and the [dataframe with locations and raw numbers](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/pred_cases_16_features_all_rfr.csv).
 
-
-
+- Next, we applied few steps to enhance the performance of the RFR: 
+    1. Applying feature importance and reconstructing the RFR model based on the selected features only which entailed repeating the preprocessing steps of splitting and standardizing the data, retraining the RFR model and testing its performance on the testing subset of selected features. 
+    2. Removing an outlier from the target new cases per 100K, repeating the preprocessing steps, refitting and evaluating the RFR model. 
+    3. Removing features with sever collinearity as suggested by the above heatmap, repeating the preprocessing steps, refitting and evaluating the RFR model. 
+    4. Increasing the number of estimators (decision trees), retraining and testing the RFR model on the 16 features preprocessed in the first step. 
+    5. Applying the increased estimators on 13 features without collinear variables, retraining and testing the RFR model on the 13 features preprocessed in the thrid step of enhancements.  
+    6. Using PCA technique to decrease data dimensions and applying it to all 16 features. Then, repeating the preprocessing steps, refitting and evaluating the RFR model. 
+    7. Using PCA technique to decrease data dimensions and applying it to only non-colinear features (13). Then, repeating the preprocessing steps, refitting and evaluating the RFR model.  
+    8. Expanding on the good test of removing outliers, we truncated the dataset back to the beginning of a severe spike in new cases per 100K at the 730 days mark, and created a new dataframe of the first 720 days into the pandemic (88,039 records, 150 countries). The split of the data was as follows: X_train shape: (66029, 16), X_test shape: (22010, 16), y_train shape: (66029,), y_test shape: (22010,). Then, we recreated an RFR model with same basic 16 features and model characteristics. 
+    9. After observing the results from the previous step we truncated the days even further down to 700 days only (84,848 records of 150 countries). The split of the data was as follows: X_train shape: (63636, 16), X_test shape: (21212, 16), y_train shape: (63636,), y_test shape: (21212,). Then, we recreated an RFR model with same basic 16 features and model characteristics
+    
+    
+    
+    
+    
 ## Results
 
 #### Data Processing and Features
@@ -161,11 +174,14 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 - Generally speaking, a Pearson correlation coefficient value greater than 0.7 indicates the presence of multicollinearity.
 - Multicollinearity affects the coefficients and p-values, but it does not influence the predictions, precision of the predictions, and the goodness-of-fit statistics. Since our primary goal was to make predictions and did not need to understand the role of each independent variable, we did not see the need to reduce severe multicollinearity for the first prediction attempt.
 - We ran the Random Forest Regression model on all 16 features and got a prediction score of 77%. 
-
-
-
-
-
+- Rerunning the RFR model on selected features based on their importance to the prediction resulted in a lower testing score of 75%.
+- Removing an outlier from the targer new cases per 100K positively affected the performance of the RFR model, resulting in a R squared value of 0.808 and lower MSE of 457.205.
+- Although none the collinear featuers shown by the heatmap included the target feature of new cases per 100K, we chose to test their influence on the model and removed them from the features set. The features with high collinearity were: (total_vaccinations_per_100K, people_fully_vaccinated_per_100K), (life_expectancy, human_development_index), and (median_age, aged_65_older). So, we removed one of each set: people_fully_vaccinated_per_100K, human_development_index, median_age. Testing the RFR model on the reduced features (13) resulted in 77% as well. 
+- Furthermore, we increased the number of decision trees used in the RFR model on the preprocessed 16 features of the first run (of 77% score), and that increased the computational time of the regression and resulted in a testing score of -23%. 
+- Applying the increased estimators on 13 features without collinear variables did also consume a substantial computation time and resulted in a testing score of 77% as well. 
+- Using Princinpal Component Analysis on all 16 features and on non-collinear 13 features, with and without increasing the number of decision tress in the Random Forest was worse than other enhancement techniques and did not help the model for a better fit. That was evident in the negative R squared scores we got from both attempts. 
+- Truncating the records down to 720 days into the pandemic had a positive influence on the RFR model performance. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
+- Truncating the records down to 700 days into the pandemic had a positive influence on the RFR model performance. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
 
 
 
@@ -197,19 +213,83 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - R-squared (R2 ):  0.769
     - mean absolute error (MAE):  4.781
     - mean squared error (MSE):  570.731
-    - Root Mean Squared Error (RMSE):  23.890
+    - Root Mean Squared Error (RMSE):  23.890 <br>
+
+**Few steps were taken to enhnance the performance of the Random Forest Regression model, including:**
+1. Applying feature importance technique to eliminate certain variables that were not contributing greatly to the predictions. 
+    |![Feature Importance on RFR - 16 Features.](./Images/rfr_16_feature_importance.png)|
+    |-|
+    - The performance scores of the RFR model predictions based on feature importance were worse than the first run: 
+        - R-squared (R2 ):  0.752
+        - mean absolute error (MAE):  5.951
+        - mean squared error (MSE):  596.332
+        - Root Mean Squared Error (RMSE):  24.420
+2. Removing the maximum outlier from new_cases_per_100k did enhance the RFR model performance to 81% 
+    - R-squared (R2 ):  0.808
+    - mean absolute error (MAE):  4.710
+    - mean squared error (MSE):  457.205
+    - Root Mean Squared Error (RMSE):  21.382
+3. Reducing featuers to exclude ones with sever multi-collinearity did not change the performance of the RFR model significantly. 
+    - R-squared (R2 ):  0.770
+    - mean absolute error (MAE):  4.777
+    - mean squared error (MSE):  568.454
+    - Root Mean Squared Error (RMSE):  23.842
+4. Increasing the number of estimators/decision trees of the RFR model on 16 features badly influenced the model with a negative R sqaured score. A negative R2 is not a mathematical impossibility or the sign of a computer bug. It simply means that the chosen model (with its constraints) fits the data really poorly.
+    - R-squared (R2 ): -0.235
+    - mean absolute error (MAE):  23.307
+    - mean squared error (MSE):  2972.592
+    - Root Mean Squared Error (RMSE):  54.521
+5. Applying the increased estimators on 13 features without collinear variables did also consume a substantial computation time but slightly increased the performance of the model. 
+    - R-squared (R2 ):  0.773
+    - mean absolute error (MAE):  4.751
+    - mean squared error (MSE):  560.722
+    - Root Mean Squared Error (RMSE):  23.680
+6. Reducing data dimensions using Princinpal Component Analysis and recreating the RFR model on 16 features (including collinear features), affected the model negatively and was time consuming. 
+    - R-squared (R2 ): -0.119
+    - mean absolute error (MAE):  22.460
+    - mean squared error (MSE):  2694.212
+    - Root Mean Squared Error (RMSE):  51.906
+7. Reducing data dimensions using Princinpal Component Analysis and recreating the RFR model on 13 features (excluding collinear features), in addition to increasing the decision trees from 128 to 300 also affected the model negatively and was time consuming. 
+    - R-squared (R2 ): -0.613
+    - mean absolute error (MAE):  24.216
+    - mean squared error (MSE):  3883.128
+    - Root Mean Squared Error (RMSE):  62.315
+8. Truncating covid days down to 720 days preceeding a new spike in cases decreased the errors in predictions signficantly. 
+    - R-squared (R2 ):  0.774
+    - mean absolute error (MAE):  2.672
+    - mean squared error (MSE):  94.215
+    - Root Mean Squared Error (RMSE):  9.706
+    |![RFR Predictions vs Actual - 720 days - 16 Features.](./Images/rfr_720d_16_actual_pred.png)|
+    |-|
+    |![Predictions and Residuals of RFR on 720 days - training vs testing- 16 Features](./Images/rfr_720d_16_pred_residuals_train_test.png)| ![Predictions and Residuals of RFR on 720 days - Whole Scaled Data- 16 Features](./Images/rfr_720d_16_pred_residuals_whole_scaled.png)|
+    |-|-|
+9. Truncating covid days down to 700 days to completely take out the new spike in cases decreased the errors in predictions even further. 
+    - R-squared (R2 ):  0.78
+    - mean absolute error (MAE):  2.62
+    - mean squared error (MSE):  80.40
+    - Root Mean Squared Error (RMSE):  8.97
+    |![RFR Predictions vs Actual - 700 days - 16 Features.](./Images/rfr_700d_16_actual_pred.png)| 
+    |-|
+    |![](./Images/rfr_700d_16_pred_residuals_train_test.png)| ![](./Images/rfr_700d_16_pred_residuals_whole_scaled.png)|
+    |-|-|
 
 
 
 
-
-
-
-
-
-## COVID-19 Analysis Summary
-## VIZ
+## Visualizations
 Used Tableau to make representations of the cleaned cases_pred data set.
 [COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/Story1?publish=yes)
+
+## COVID-19 Analysis Summary
+1. 
+2. 
+3. 
+4. 
+
+
+
+
+
+
 
 ---

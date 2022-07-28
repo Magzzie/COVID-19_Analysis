@@ -3,7 +3,7 @@
 ## COVID-19 Overview
 #### As COVID-19 persists throughout the globe, we intend to explore and determine the relationships between different factors that contribute to the spread of COVID-19 and its outcomes noted by people worldwide. The goal of analyzing these health outcomes is ultimately to predict the health outcomes in future populations based on the factors determined significantly by the machine learning model utilized below. 
 
-The data utilized for the analysis is from Our World in Data, which is an organization that focuses on researching international crises, including issues like climate change, war, and disease. <br>
+The data utilized for the analysis was obtained from Our World in Data, which is an organization that focuses on researching international crises, including issues like climate change, war, and disease. <br>
 Specifically, Our World in Data has combined data from across the world to include country, continent, new COVID-19 cases, total COVID-19 cases, population, age, and several other factors about the COVID-19 pandemic.<br>
 By analyzing this dataset, we hope to answer questions such as: how does age affect the health outcome of someone with a COVID-19 diagnosis? What differences exist between the health outcomes of people from different countries? How can future health outcomes be predicted from this data?
 
@@ -36,7 +36,7 @@ Furthermore, we intend to build deep-learning regression neural networks with th
 - Data Sources: owid-covid-data.csv, 
 - Software & Framework:Python (3.7.6) & (3.7.13), Jupyter Notebook (6.4.11), Anaconda (4.10.3) & (4.13.0), PostgreSQL (11.15-R1), pgAdmin4 (6.7), Spark (3.2.1), Visual Studio Code (1.65.0), Tableau (2022.1.2).
 - Libraries & Packages: 
-    - Pandas (1.3.5), matplotlib (3.5.1), NumPy (1.21.5).
+    - Pandas (1.3.5), matplotlib (3.5.1), NumPy (1.21.5), seaborn (0.11.2).
     - PySpark, JAVA, PostgreSQL driver, MLlib, SQLalchemy (1.4.39), psycopg2 (2.9.3),
     - Scikit-learn (1.0.2), Scikit-learn (0.23.2) for Ensemble Learning, imbalanced-learn library (0.7.0), 
     - TensorFlow (2.3.0), Keras-applications (1.0.8),  Keras-preprocessing (1.1.2). 
@@ -44,21 +44,22 @@ Furthermore, we intend to build deep-learning regression neural networks with th
 
 ## Methods & Code
 ### Database 
-Utilizing AWS, an RDS instance was created to access the data file located in an S3 bucket. <br>
-PySpark was then used to load the data and create an identifier column for the rows ("id_row"). <br>
-Next, the data type of the "date" column was changed to indicate the date data type accurately.<br>
-From there, the data was split into two data frames (cases_data and demos_data) to reflect data relating to the COVID-19 cases and the data relating to the demographics of individuals diagnosed with COVID-19, respectively.<br.
-Lastly, PySpark was used again to load the data frames into Postgres tables.<br>
+- Utilizing AWS, an RDS instance was created to access the data file located in an S3 bucket. 
+- PySpark was then used to load the data and create an identifier column for the rows ("id_row"). 
+- Next, the data type of the "date" column was changed to indicate the date data type accurately.
+- From there, the data was split into two data frames (cases_data and demos_data) to reflect data relating to the COVID-19 cases and the data relating to the demographics of individuals diagnosed with COVID-19, respectively.
+- Lastly, PySpark was used again to load the data frames into Postgres tables.<br>
 
-Using Postgres, the cases_data and demos_data tables were joined on the "id_row" column with a full outer join into the table combined_COVID_data.<br>
-The data was filtered to only include valid countries within the location column and loaded into the table all_countries_data.<br>
-A connection was made from the database to the next phase of analysis-the machine learning component.<br>
-Please see the ERD below for the relationship between tables.<br>
+- Using Postgres, the cases_data and demos_data tables were joined on the "id_row" column with a full outer join into the table combined_COVID_data.
+- The data was filtered to only include valid countries within the location column and loaded into the table all_countries_data.
+- A connection was made from the database to the next phase of analysis-the machine learning component.
+Please see the ERD for the relationship between tables.
+    |[ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Images/ERD.png)|
+    |-|
 
-[[LINK TO ERD IMAGE]]
 
 ### Data Processing
-The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebook to be explored and analyzed.<br> 
+The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebook to be explored and analyzed.
 #### ETL for New Cases Prediction 
 - The OWID COVID-19 dataset initially contained (198,846) data records organized in 67 columns between January 1st, 2020, and July 5th, 2022, when we pulled the dataset for analysis. 
 - The raw metadata in the dataset included information about the total and new cases of COVID-19, total and new COVID-related deaths, hospitals' ICUs capacity and admissions, COVID-19 screening tests counts and results, numbers of vaccinations and boosters, plus rates of people vaccinated. Additionally, the dataset had various demographic, health, social, and economic criteria of the different countries.
@@ -107,28 +108,30 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
 4. **Exporting Data**:
     - We split the cleaned dataset into two data frames: one for cases prediction and another for deaths predictions. 
     - These new cleaned data files can be found here: [cases_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_pred.csv), [death_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/death_pred.csv).    
-5. To facilitate the machine learning model application, we split the analysis into three phases:
-    - Phase 1: Apply only to countries with populations above 1 million.
-    - Phase 2: apply on locations with population above 500K ( 'above 1 mill' + '500K-1mill').
-    - Phase 3: Apply to all locations with a 2-year worth of records    
-6. We created three population-based DataFrame:
-    - low_pop_df: Population less than 500K.
-    - small_countries_df: Population between 500K - 1 mill.
-    - mill_countries_df: Population more than one million.
-7. We exported the cases prediction DataFrame of 150 countries with one mill+ to a CSV file that can be accessed here: [cases_1mill_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_1mill_pred.csv).
+5. To facilitate the machine learning model application, we split the dataset based on population and applied the model to countries with populations of 1 million and above. 
+6. We created a population-based DataFrame: **mill_countries_df**: Population more than 1 million.
+7. We exported the cases prediction DataFrame of 150 countries with one million+ to a CSV file that can be accessed here: [cases_1mill_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_1mill_pred.csv).
+8. To eliminate the influence of new COVID-19 variants that caused spikes in the number of new cases across the world with disregard to vaccinations. we created subsets of the 1 million + dataframe: one for the first 720 days of the pandemic and the second for the first 700 days. 
+9. We exported the cases prediction DataFrame of 700 days and 720 days to CSV files that can be accessed here: [cases_1mill_2yr_df.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_1mill_2yr_df.csv) & [cases_1mill_700_df.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_1mill_700_df.csv).
 
 #### Data Preprocessing 
-- We separated the location categorical variable into a separate DataFrame maintaing the id_row and created a new DataFrame that consists of the engineered columns and health metrics: 'covid_days', 'reproduction_rate', 'stringency_index', 'population', 'population_density', 'median_age', 'aged_65_older', 'gdp_per_capita','cardiovasc_death_rate', diabetes_prevalence', 'life_expectancy', 'human_development_index', 'total_cases_per_100K', 'new_cases_per_100K', 'total_vaccinations_per_100K', 'people_fully_vaccinated_per_100K', 'daily_vaccinations_per_100K', 'daily_people_fully_vaccinated_per_100K'.
-- Then, we visualized the features with a heatmap to study their inner correlations using the Seaborn python library.
-
+- We created a new DataFrame that consists of the engineered columns and health metrics: 'covid_days', 'reproduction_rate', 'stringency_index', 'population_density', 'median_age', 'aged_65_older', 'gdp_per_capita','cardiovasc_death_rate', diabetes_prevalence', 'life_expectancy', 'human_development_index', 'total_cases_per_100K', 'new_cases_per_100K', 'total_vaccinations_per_100K', 'people_fully_vaccinated_per_100K', 'daily_vaccinations_per_100K', 'daily_people_fully_vaccinated_per_100K', 'population'.
+- With 99,856 records and 17 columns, we visualized all the variables with a heatmap to study their correlations using the Seaborn python library.
+    |![16 Features Heatmap.](./Images/features_16_heatmap_masked.png)|
+    |-|
+- Next, we defined target to be new_cases_per_100K and the rest 16 columns were the features. 
+- The summary statistics for the 16 features were as follows: 
+    |![16 Features Summary Stats 1](./Images/features_16_summary_stats_1.png)| ![16 Features Summary Stats 2](./Images/features_16_summary_stats_2.png)|
+    |-|-|
+- Next, we split the data into training and testing subsets and standardized them with the StandardScaler. 
+- The training and testing subsets were split according the default of 75%, 25%, respectively. X_train shape: (74892, 16), X_test shape: (24964, 16), y_train shape: (74892,), y_test shape: (24964,).
 
 
 #### Creating Model
-
-
-
-
-
+- We started by establishing a random forest regression instance and chose 128 decision trees for the first run of the model, followed by fitting and evaluating the model on the scaled training and testing data, respectively. 
+- We scored the model using mean squared error, mean absolut error, and the R squared metrics. 
+- Then, we used matplotlib library to visualize the predictions against the actual new cases per 100k from the testing subset, in addition to plotting the residuals of predictions for the whole *scaled* dataset. 
+- Finally, we scaled the whole dataset of 16 features and made predictions on them. Then, added the predictions and calculated residuals to the [features only dataframe](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/pred_cases_16_features_rfr.csv) and the [dataframe with locations and raw numbers](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/pred_cases_16_features_all_rfr.csv).
 
 
 
@@ -150,14 +153,19 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 - There were 15 locations with a population less than 500K, accounting for 5,688 records ranging between 6-630 records per location.
 - There were 12 locations with a population between 500K and 1 million, accounting for 6,525 records ranging from 51 to 732 records per location.
 -  There were 150 countries with a population of 1 million and above, accounting for 99,856 records ranging between 279-767 per location. 
+- The data subsets created based on time frames of the pandemic (700 days, 720 days) served as a concept proof of the changing nature of viral infectious diseases. 
 
-- In the first phase of predictions, we focused on countries with a population of 1 million and above. These 150 countries have accounted for 
-
-
+- In the first phase of predictions, we focused on countries with a population of 1 million and above. These 150 countries have accounted for 99,856 records. 
 - Correlation is often used to determine a cause-and-effect relationship between two variables. However, correlation does not necessarily imply causation. Correlation heatmaps are a type of plot that visualize the strength of relationships between numerical variables. Correlation heatmaps can be used to find potential relationships between variables and to understand the strength of these relationships. 
 - We constructed a heatmap to reflect the correclation between seventeen features of interest using the Seaborn library, and found that variables such as total_vaccinations_per_100K & people_fully_vaccinated_per_100K, life_expectancy & human_development_index, median_age & human_development_index, median_age & aged_65_older, and median_age & life_expectancy were having a very strong positive correlation. While  variables such as aged_65_older & human_development_index, gdp_per_capita & human_development_index, and aged_65_older, & life_expectancy were also having a strong positive correlation but to a lesser degree. 
 - Generally speaking, a Pearson correlation coefficient value greater than 0.7 indicates the presence of multicollinearity.
 - Multicollinearity affects the coefficients and p-values, but it does not influence the predictions, precision of the predictions, and the goodness-of-fit statistics. Since our primary goal was to make predictions and did not need to understand the role of each independent variable, we did not see the need to reduce severe multicollinearity for the first prediction attempt.
+- We ran the Random Forest Regression model on all 16 features and got a prediction score of 77%. 
+
+
+
+
+
 
 
 
@@ -169,6 +177,30 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - Structurally speaking, random forest models are very similar to their neural network counterparts.
     - Random forest models have been a staple in machine learning algorithms for many years due to their robustness and scalability.
     - Both output and feature selection of random forest models are easy to interpret and can easily handle outliers and nonlinear data.
+
+
+| --- | Random Forest Regression | Deep Learning Neural Network Regression |
+| --- | 
+
+- The Random Forest Regression model was able to predict the daily number of new COVID-19 cases per 100,000 people with 77% accuracy on the testing subset. 
+    |![Predictions vs Actual from 16 Features.](./Images/rfr_16_actual_pred.png)|
+    |-|
+    |![Predictions and Residual of Training & Testing Data from 16 Features.](./Images/rfr_16_pred_residuals_train_test.png)| ![Predictions and Residuals of Whole Scaled Data from 16 Features.](./Images/rfr_16_pred_residuals_whole_scaled.png)|
+    |-|-|
+    |![Residuals of Predictions on Whole Scaled Data - 16 Features.](./Images/rfr_16_residuals_whole_scaled.png)|
+    |-|
+- Here is a sample of the Random Forest Regression prediction of new cases per 100K against the actual numbers. 
+    |![Sample Predictions Against Actual New Cases - 16 Features.](./Images/rfr_16_sample_pred_scaled_data.png)|
+    |-|
+    
+- The first run of the Random Forest Regression model on testing data with 16 features resulted in the following performance scores, knowing that the model scored 97% on the training subset: 
+    - R-squared (R2 ):  0.769
+    - mean absolute error (MAE):  4.781
+    - mean squared error (MSE):  570.731
+    - Root Mean Squared Error (RMSE):  23.890
+
+
+
 
 
 

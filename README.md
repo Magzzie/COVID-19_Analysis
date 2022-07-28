@@ -54,7 +54,7 @@ Furthermore, we intend to build deep-learning regression neural networks with th
 - The data was filtered to only include valid countries within the location column and loaded into the table all_countries_data.
 - A connection was made from the database to the next phase of analysis-the machine learning component.
 Please see the ERD for the relationship between tables.
-    |[ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Images/ERD.png)|
+    |![ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Images/ERD.png)|
     |-|
 
 

@@ -90,6 +90,6 @@ Includes output labels for input data
 
 ## VIZ
 Used tableau to make representations of the cleaned cases_pred data set.
-Included tableau work book.
+Included tableau work book.Used tableau to make representations of the cleaned cases_pred data set. This included a heat map of the total cases per 100K allong with various graphs of the total cases per 100K, new cases per 100K, reproduction rate, total vaccinations per 100K and daily vaccinations per 100K to show the feature importance. heat maps were made comparing the predicted and actual values of the new cases per 100K.
 
 https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/Story1?publish=yes

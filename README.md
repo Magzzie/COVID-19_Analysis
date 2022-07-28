@@ -294,4 +294,5 @@ Included tableau work book. [COVID-19 Analysis Dashboard](https://public.tableau
 8. There were severe limitations to the dataset, including but not limited to huge gaps in reporting between locations, inconsistent calculations, and absent important informations such as public adherence to protective measures. 
 9. Further analysis is recommended on separate countries to further evaluate the weaknesses of the collective dataset. 
 
+[The Complete Analysis PowerPoint](https://github.com/Magzzie/COVID-19_Analysis/blob/main/COVID-19%20Analysis.pptx)
 ---

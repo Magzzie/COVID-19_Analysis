@@ -194,18 +194,14 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - Random forest models have been a staple in machine learning algorithms for many years due to their robustness and scalability.
     - Both output and feature selection of random forest models are easy to interpret and can easily handle outliers and nonlinear data.
 
-
-| --- | Random Forest Regression | Deep Learning Neural Network Regression |
-| --- | 
-
-- The Random Forest Regression model was able to predict the daily number of new COVID-19 cases per 100,000 people with 77% accuracy on the testing subset. 
+- The Random Forest Regression model was able to predict the daily number of new COVID-19 cases per 100,000 people with 77% accuracy on the testing subset. <br>
     |![Predictions vs Actual from 16 Features.](./Images/rfr_16_actual_pred.png)|
     |-|
     |![Predictions and Residual of Training & Testing Data from 16 Features.](./Images/rfr_16_pred_residuals_train_test.png)| ![Predictions and Residuals of Whole Scaled Data from 16 Features.](./Images/rfr_16_pred_residuals_whole_scaled.png)|
     |-|-|
     |![Residuals of Predictions on Whole Scaled Data - 16 Features.](./Images/rfr_16_residuals_whole_scaled.png)|
     |-|
-- Here is a sample of the Random Forest Regression prediction of new cases per 100K against the actual numbers. 
+- Here is a sample of the Random Forest Regression prediction of new cases per 100K against the actual numbers. <br>
     |![Sample Predictions Against Actual New Cases - 16 Features.](./Images/rfr_16_sample_pred_scaled_data.png)|
     |-|
     
@@ -216,7 +212,7 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - Root Mean Squared Error (RMSE):  23.890 <br>
 
 **Few steps were taken to enhnance the performance of the Random Forest Regression model, including:**
-1. Applying feature importance technique to eliminate certain variables that were not contributing greatly to the predictions. 
+1. Applying feature importance technique to eliminate certain variables that were not contributing greatly to the predictions. <br>
     |![Feature Importance on RFR - 16 Features.](./Images/rfr_16_feature_importance.png)|
     |-|
     - The performance scores of the RFR model predictions based on feature importance were worse than the first run: 
@@ -224,7 +220,7 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
         - mean absolute error (MAE):  5.951
         - mean squared error (MSE):  596.332
         - Root Mean Squared Error (RMSE):  24.420
-2. Removing the maximum outlier from new_cases_per_100k did enhance the RFR model performance to 81% 
+2. Removing the maximum outlier from new_cases_per_100k did enhance the RFR model performance to 81%.
     - R-squared (R2 ):  0.808
     - mean absolute error (MAE):  4.710
     - mean squared error (MSE):  457.205
@@ -258,22 +254,24 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - R-squared (R2 ):  0.774
     - mean absolute error (MAE):  2.672
     - mean squared error (MSE):  94.215
-    - Root Mean Squared Error (RMSE):  9.706
+    - Root Mean Squared Error (RMSE):  9.706 <br>
+    
     |![RFR Predictions vs Actual - 720 days - 16 Features.](./Images/rfr_720d_16_actual_pred.png)|
     |-|
+    
     |![Predictions and Residuals of RFR on 720 days - training vs testing- 16 Features](./Images/rfr_720d_16_pred_residuals_train_test.png)| ![Predictions and Residuals of RFR on 720 days - Whole Scaled Data- 16 Features](./Images/rfr_720d_16_pred_residuals_whole_scaled.png)|
     |-|-|
 9. Truncating covid days down to 700 days to completely take out the new spike in cases decreased the errors in predictions even further. 
     - R-squared (R2 ):  0.78
     - mean absolute error (MAE):  2.62
     - mean squared error (MSE):  80.40
-    - Root Mean Squared Error (RMSE):  8.97
+    - Root Mean Squared Error (RMSE):  8.97 <br>
+    
     |![RFR Predictions vs Actual - 700 days - 16 Features.](./Images/rfr_700d_16_actual_pred.png)| 
     |-|
-    |![](./Images/rfr_700d_16_pred_residuals_train_test.png)| ![](./Images/rfr_700d_16_pred_residuals_whole_scaled.png)|
+    
+    |![Predictions and Residuals of RFR on 700 days - training and testing- 16 Features](./Images/rfr_700d_16_pred_residuals_train_test.png)| ![Predictions and Residuals of RFR on 700 days - Whole Scaled- 16 Features](./Images/rfr_700d_16_pred_residuals_whole_scaled.png)|
     |-|-|
-
-
 
 ## Visualizations
 Used Tableau to make representations of the cleaned cases_pred data set.

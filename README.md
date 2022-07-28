@@ -279,7 +279,7 @@ Used Tableau to make representations of the cleaned cases_pred data set.
 - Then new cases per 100K was ploted against new cases per 100K predictions to see how the predicted data did comparied to the actual data.  
 - Because of a spike in the data two more graphs were made with the model using truncated date, one going from the original 817 covid days to 725 covid days and the other going to 700 covid days.  
 - Lastly a heat maps were made comparing the predicted and actual values of the new cases per 100K.<br>
-Included tableau work book. [COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/Story1?publish=yes)
+Included tableau work book. [COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/COVIDStory?publish=yes)
 
 ## COVID-19 Analysis Summary
 1. We were able to predict the daily number of new COVID-19 cases in 150 countries across the world using Random Forest Regression models with ranging accuracy from 77% to 81%. 

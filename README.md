@@ -277,19 +277,17 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 
 
 ## Visualizations
-Used Tableau to make representations of the cleaned cases_pred data set.
-[COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/Story1?publish=yes)
+Used tableau to make representations of the cleaned cases_pred data set.  
+- This included a heat map of the total cases per 100K allong with various graphs of the total cases per 100K, new cases per 100K, reproduction rate, total vaccinations per 100K and daily vaccinations per 100K to show the feature importance.  
+- Then new cases per 100K was ploted against new cases per 100K predictions to see how the predicted data did comparied to the actual data.  
+- Because of a spike in the data two more graphs were made with the model using truncated date, one going from the original 817 covid days to 725 covid days and the other going to 700 covid days.  
+- Lastly a heat maps were made comparing the predicted and actual values of the new cases per 100K. <br>
+Included tableau work book.[COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/Story1?publish=yes)
 
 ## COVID-19 Analysis Summary
 1. 
 2. 
 3. 
 4. 
-
-
-
-
-
-
 
 ---

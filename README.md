@@ -275,19 +275,19 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 
 
 
-
 ## Visualizations
-Used tableau to make representations of the cleaned cases_pred data set.  
-- This included a heat map of the total cases per 100K allong with various graphs of the total cases per 100K, new cases per 100K, reproduction rate, total vaccinations per 100K and daily vaccinations per 100K to show the feature importance.  
-- Then new cases per 100K was ploted against new cases per 100K predictions to see how the predicted data did comparied to the actual data.  
-- Because of a spike in the data two more graphs were made with the model using truncated date, one going from the original 817 covid days to 725 covid days and the other going to 700 covid days.  
-- Lastly a heat maps were made comparing the predicted and actual values of the new cases per 100K. <br>
-Included tableau work book.[COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/Story1?publish=yes)
+Used Tableau to make representations of the cleaned cases_pred data set.
+[COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/Story1?publish=yes)
 
 ## COVID-19 Analysis Summary
-1. 
-2. 
-3. 
-4. 
+1. We were able to predict the daily number of new COVID-19 cases in 150 countries across the world using Random Forest Regression models with ranging accuracy from 77% to 81%. 
+2. We attempted different techniques to enhance the model including selecting features based on importance, dropping features with severe multicollinearity, increasing the number of decision trees, and reducing the dimension of the data using Principal Component Analysis. 
+3. Not all enhancement techniques were beneficial. 
+4. Changing the time frame of the analysis and escaping new spikes in the pandemic had steady positive effects on predictions. Insinuating the changing nature of the pandemic due to the rise of new COVID-19 variants that were not accounted for in the original dataset. 
+5. The change in the nature of the virus with every new wave might have confused the model that depended on steady factors like protective public health measures including vaccinations. 
+6. At the beginning of the pandemic, the vaccinations were directed as neutralizing immunity against the virus which showed on the prediction pattern of new cases. However, later on in the course of the pandemic and as new variants of COVID-19 emerged, the effects of the vaccinations might have been diluted. 
+7. Deep Learning Neural Networks were very computationally expensive and did not provide superiority to Random Forest Regression models. 
+8. There were severe limitations to the dataset, including but not limited to huge gaps in reporting between locations, inconsistent calculations, and absent important informations such as public adherence to protective measures. 
+9. Further analysis is recommended on separate countries to further evaluate the weaknesses of the collective dataset. 
 
 ---

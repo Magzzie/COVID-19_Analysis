@@ -176,7 +176,7 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 - Using Principal Component Analysis on all 16 features and non-collinear 13 features, with and without increasing the number of decision trees in the Random Forest, was worse than other enhancement techniques and did not help the model for a better fit. That was evident in the negative R-squared scores we got from both attempts. 
 - Truncating the records down to 720 days into the pandemic positively influenced the performance of the RFR model. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
 - Truncating the records down to 700 days into the pandemic positively influenced the performance of the RFR model. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
-
+- The Deep Learning Neural Networks created for the predictions of new cases per 100K decreased the error of predictions significantly. For example, the mean absolute error (MAE) ranged down from 11.9 to 7.6 in four optimization attempts. However, the required computational resources were much higher than our domestic capacities to extract the predictions. 
 ### Model Selection: Random Forest vs. Deep Neural Network
 #### Random Forest Regressor
 - Random Forest is a supervised ensemble learning model that combines decision trees to analyze input data.
@@ -247,67 +247,56 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - mean squared error (MSE):  94.215
     - Root Mean Squared Error (RMSE):  9.706 <br>
     
-    |![RFR Predictions vs Actual - 720 days - 16 Features.](./Images/rfr_720d_16_actual_pred.png)|
-    |-|
-    
-    |![Predictions and Residuals of RFR on 720 days - training vs testing- 16 Features](./Images/rfr_720d_16_pred_residuals_train_test.png)| ![Predictions and Residuals of RFR on 720 days - Whole Scaled Data- 16 Features](./Images/rfr_720d_16_pred_residuals_whole_scaled.png)|
-    |-|-|
+    |![RFR Predictions vs Actual - 720 days - 16 Features.](./Images/rfr_720d_16_actual_pred.png)|![Predictions and Residuals of RFR on 720 days - training vs testing- 16 Features](./Images/rfr_720d_16_pred_residuals_train_test.png)| ![Predictions and Residuals of RFR on 720 days - Whole Scaled Data- 16 Features](./Images/rfr_720d_16_pred_residuals_whole_scaled.png)|
+    |-|-|-|
+   
 9. Truncating covid days down to 700 days to completely take out the new spike in cases decreased the errors in predictions even further. 
     - R-squared (R2 ):  0.78
     - mean absolute error (MAE):  2.62
     - mean squared error (MSE):  80.40
     - Root Mean Squared Error (RMSE):  8.97 <br>
     
-    |![RFR Predictions vs Actual - 700 days - 16 Features.](./Images/rfr_700d_16_actual_pred.png)| 
-    |-|
-    
-    |![Predictions and Residuals of RFR on 700 days - training and testing- 16 Features](./Images/rfr_700d_16_pred_residuals_train_test.png)| ![Predictions and Residuals of RFR on 700 days - Whole Scaled- 16 Features](./Images/rfr_700d_16_pred_residuals_whole_scaled.png)|
-    |-|-|
-    
+    |![RFR Predictions vs Actual - 700 days - 16 Features.](./Images/rfr_700d_16_actual_pred.png)|![Predictions and Residuals of RFR on 700 days - training and testing- 16 Features](./Images/rfr_700d_16_pred_residuals_train_test.png)| ![Predictions and Residuals of RFR on 700 days - Whole Scaled- 16 Features](./Images/rfr_700d_16_pred_residuals_whole_scaled.png)|
+    |-|-|-|
+  
 #### Deep Learning Neural Network
 1. The basic Neural Network had 187 parameters and ReLu activation function through hidden and output layers.
     - It was trained on all 16 features using 100 epochs. <br>
-        |![Structure of a Basic Deep Learning NN on 16 Features.](./Images/nn_16_basic_structure.png)|
-        |-|
     - Testing scores were as follows: 
         - Mean squared error from the neural net:  1145.80322265625
         - Mean absolute error from neural net:  11.782356262207031 <br>
-        |![Training and Testing Loss for Basic NN - 16 Features.](./Images/nn_16_basic_loss.png)|![Training and Testing MAE for Basic NN - 16 Features.](./Images/nn_16_basic_mae.png)|
-        |-|-| 
-    
+	
+	|![Structure of a Basic Deep Learning NN on 16 Features.](./Images/nn_16_basic_structure.png)|![Training and Testing Loss for Basic NN - 16 Features.](./Images/nn_16_basic_loss.png)|![Training and Testing MAE for Basic NN - 16 Features.](./Images/nn_16_basic_mae.png)|
+	|-|-|-|
+         
 2. The optimized Neural Network had 2,417 parameters and ReLu activation function through hidden and output layers.
     - It was trained on all 16 features using 100 epochs. <br>
-        |![Structure of an Optimized Deep Learning NN on 16 Features.](./Images/nn_16_optimized_Structure.png)|
-        |-|
-
     - Testing scores were as follows: 
         - Mean squared error from the neural net:  740.0748291015625
         - Mean absolute error from neural net:  9.408642768859863 <br>
-        |![Training and Testing Loss for Optimized NN - 16 Features.](./Images/nn_16_optimized_loss.png)|![Training and Testing MAE for Optimized NN - 16 Features.](./Images/nn_16_optimized_mae.png)|
-        |-|-|       
+	
+	|![Structure of an Optimized Deep Learning NN on 16 Features.](./Images/nn_16_optimized_Structure.png)|![Training and Testing Loss for Optimized NN - 16 Features.](./Images/nn_16_optimized_loss.png)|![Training and Testing MAE for Optimized NN - 16 Features.](./Images/nn_16_optimized_mae.png)|
+	|-|-|-|     
 
 3. The enhanced Neural Network had 10,497 parameters and ReLu activation function through hidden and output layers.
     - It was trained on all 16 features using 150 epochs. <br>
-        |![Structure of an Enhanced Deep Learning NN on 16 Features.](./Images/nn_16_enhanced_structure.png)|
-        |-|
-        
     - Testing scores were as follows: 
         - Mean squared error from the neural net:  622.7482299804688
         - Mean absolute error from neural net:  7.698912143707275 <br>
-        |![Training and Testing Loss for Enhanced NN - 16 Features.](./Images/nn_16_enhanced_loss.png)|![Training and Testing MAE for Enhanced NN - 16 Features.](./Images/nn_16_enhanced_mae.png)|
-        |-|-|  
+	
+	|![Structure of an Enhanced Deep Learning NN on 16 Features.](./Images/nn_16_enhanced_structure.png)|![Training and Testing Loss for Enhanced NN - 16 Features.](./Images/nn_16_enhanced_loss.png)|![Training and Testing MAE for Enhanced NN - 16 Features.](./Images/nn_16_enhanced_mae.png)|
+	|-|-|-|
     
 4. Reducing the number of features by removing the ones with severe multicollinearity. 
     - This network had 10,113 parameters and ReLu activation function through hidden and output layers.
     - It was trained on 13 features only using 150 epochs.
-        |![Structure of a Deep Learning NN on 13 Features.](./Images/nn_13_Structure.png)|
-        |-|
-    
     - Testing scores were as follows:
         - Mean squared error from the neural net:  626.8229370117188
-        - Mean absolute error from the neural net:  7.5756425857543945
-        |![Training and Testing Loss for NN - 13 Features.](./Images/nn_13_loss.png)|![Training and Testing MAE for NN - 13 Features.](./Images/nn_13_mae.png)|
-        |-|-|       
+        - Mean absolute error from the neural net:  7.5756425857543945 	<br>
+	
+	|![Structure of a Deep Learning NN on 13 Features.](./Images/nn_13_Structure.png)|![Training and Testing Loss for NN - 13 Features.](./Images/nn_13_loss.png)|![Training and Testing MAE for NN - 13 Features.](./Images/nn_13_mae.png)|
+	|-|-|-|
+
 <br>
 We were not able to export the predictions of the whole scaled dataset into a data frame in any of the four previous neural networks due to the following error: 
 **MemoryError: Unable to allocate 74.3 GiB for an array with shape (99856, 99856) and data type float64**
@@ -333,7 +322,5 @@ Included tableau workbook. [COVID-19 Analysis Dashboard](https://public.tableau.
 
 [The Complete Analysis PowerPoint](https://github.com/Magzzie/COVID-19_Analysis/blob/main/COVID-19%20Analysis.pptx)
 
-
-[The Complete Analysis PowerPoint](https://github.com/Magzzie/COVID-19_Analysis/blob/main/COVID-19%20Analysis.pptx)
 ---
 

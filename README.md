@@ -54,7 +54,7 @@ Furthermore, we intend to build deep-learning regression neural networks with th
 - The data was filtered to only include valid countries within the location column and loaded into the table all_countries_data.
 - A connection was made from the database to the next phase of analysis-the machine learning component.
 Please see the ERD for the relationship between tables.
-    |![ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Images/ERD.png)|
+    |![ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/mlBranch/Images/ERD%20(2).jpg)|
     |-|
 
 
@@ -187,12 +187,10 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - Both output and feature selection of random forest models are easy to interpret and can easily handle outliers and nonlinear data.
 
 - The Random Forest Regression model predicted the daily number of new COVID-19 cases per 100,000 people with 77% accuracy on the testing subset. <br>
-    |![Predictions vs Actual from 16 Features.](./Images/rfr_16_actual_pred.png)|
-    |-|
-    |![Predictions and Residual of Training & Testing Data from 16 Features.](./Images/rfr_16_pred_residuals_train_test.png)| ![Predictions and Residuals of Whole Scaled Data from 16 Features.](./Images/rfr_16_pred_residuals_whole_scaled.png)|
-    |-|-|
-    |![Residuals of Predictions on Whole Scaled Data - 16 Features.](./Images/rfr_16_residuals_whole_scaled.png)|
-    |-|
+    |![Predictions vs Actual from 16 Features.](./Images/rfr_16_actual_pred.png)|![Predictions and Residuals of Whole Scaled Data from 16 Features.](./Images/rfr_16_pred_residuals_whole_scaled.png)|
+    |-|-|    
+    |![Residuals of Predictions on Whole Scaled Data - 16 Features.](./Images/rfr_16_residuals_whole_scaled.png)|![Predictions and Residual of Training & Testing Data from 16 Features.](./Images/rfr_16_pred_residuals_train_test.png)| 
+   
 - Here is a sample of the Random Forest Regression prediction of new cases per 100K against the actual numbers. <br>
     |![Sample Predictions Against Actual New Cases - 16 Features.](./Images/rfr_16_sample_pred_scaled_data.png)|
     |-|

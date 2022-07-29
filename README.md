@@ -3,7 +3,7 @@
 ## COVID-19 Overview
 #### As COVID-19 persists throughout the globe, we intend to explore and determine the relationships between different factors that contribute to the spread of COVID-19 and its outcomes noted by people worldwide. The goal of analyzing these health outcomes is ultimately to predict the health outcomes in future populations based on the factors determined significantly by the machine learning model utilized below. 
 
-The data utilized for the analysis was obtained from Our World in Data, which is an organization that focuses on researching international crises, including issues like climate change, war, and disease. <br>
+The data utilized for the analysis were obtained from Our World in Data, which is an organization that focuses on researching international crises, including issues like climate change, war, and disease. <br>
 Specifically, Our World in Data has combined data from across the world to include country, continent, new COVID-19 cases, total COVID-19 cases, population, age, and several other factors about the COVID-19 pandemic.<br>
 By analyzing this dataset, we hope to answer questions such as: how does age affect the health outcome of someone with a COVID-19 diagnosis? What differences exist between the health outcomes of people from different countries? How can future health outcomes be predicted from this data?
 
@@ -54,7 +54,7 @@ Furthermore, we intend to build deep-learning regression neural networks with th
 - The data was filtered to only include valid countries within the location column and loaded into the table all_countries_data.
 - A connection was made from the database to the next phase of analysis-the machine learning component.
 Please see the ERD for the relationship between tables.
-    |![ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Images/ERD.png)|
+    |![ERD](https://github.com/Magzzie/COVID-19_Analysis/blob/mlBranch/Images/ERD%20(2).jpg)|
     |-|
 
 
@@ -111,7 +111,7 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
 5. To facilitate the machine learning model application, we split the dataset based on population and applied the model to countries with populations of 1 million and above. 
 6. We created a population-based DataFrame: **mill_countries_df**: Population more than 1 million.
 7. We exported the cases prediction DataFrame of 150 countries with one million+ to a CSV file that can be accessed here: [cases_1mill_pred.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_1mill_pred.csv).
-8. To eliminate the influence of new COVID-19 variants that caused spikes in the number of new cases across the world with disregard to vaccinations. we created subsets of the 1 million + dataframe: one for the first 720 days of the pandemic and the second for the first 700 days. 
+8. To eliminate the influence of new COVID-19 variants that caused spikes in the number of new cases worldwide with disregard to vaccinations. We created subsets of the 1 million + data frame: one for the first 720 days of the pandemic and the second for the first 700 days. 
 9. We exported the cases prediction DataFrame of 700 days and 720 days to CSV files that can be accessed here: [cases_1mill_2yr_df.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_1mill_2yr_df.csv) & [cases_1mill_700_df.csv](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/cases_1mill_700_df.csv).
 
 #### Data Preprocessing 
@@ -119,38 +119,32 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
 - With 99,856 records and 17 columns, we visualized all the variables with a heatmap to study their correlations using the Seaborn python library.
     |![16 Features Heatmap.](./Images/features_16_heatmap_masked.png)|
     |-|
-- Next, we defined target to be new_cases_per_100K and the rest 16 columns were the features. 
+- Next, we defined the target as new_cases_per_100K, and the other 16 columns were the features. 
 - The summary statistics for the 16 features were as follows: 
     |![16 Features Summary Stats 1](./Images/features_16_summary_stats_1.png)| ![16 Features Summary Stats 2](./Images/features_16_summary_stats_2.png)|
     |-|-|
 - Next, we split the data into training and testing subsets and standardized them with the StandardScaler. 
-- The training and testing subsets were split according the default of 75%, 25%, respectively. X_train shape: (74892, 16), X_test shape: (24964, 16), y_train shape: (74892,), y_test shape: (24964,).
-
+- The training and testing subsets were split according to the default of 75% and 25%, respectively. X_train shape: (74892, 16), X_test shape: (24964, 16), y_train shape: (74892,), y_test shape: (24964,).
 
 #### Creating Model
 - We started by establishing a random forest regression instance and chose 128 decision trees for the first run of the model, followed by fitting and evaluating the model on the scaled training and testing data, respectively. 
-- We scored the model using mean squared error, mean absolut error, and the R squared metrics. 
-- Then, we used matplotlib library to visualize the predictions against the actual new cases per 100k from the testing subset, in addition to plotting the residuals of predictions for the whole *scaled* dataset. 
-- Finally, we scaled the whole dataset of 16 features and made predictions on them. Then, added the predictions and calculated residuals to the [features only dataframe](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/pred_cases_16_features_rfr.csv) and the [dataframe with locations and raw numbers](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/pred_cases_16_features_all_rfr.csv).
+- We scored the model using mean squared error, mean absolute error, and the R squared metrics. 
+- Then, we used the matplotlib library to visualize the predictions against the actual new cases per 100k from the testing subset and plot the residuals of predictions for the whole *scaled* dataset. 
+- Finally, we scaled the whole dataset of 16 features and made predictions on them. Then, we added the predictions and calculated residuals to the [features only dataframe](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/pred_cases_16_features_rfr.csv) and the [dataframe with locations and raw numbers](https://github.com/Magzzie/COVID-19_Analysis/blob/main/Resources/pred_cases_16_features_all_rfr.csv).
 
-- Next, we applied few steps to enhance the performance of the RFR: 
-    1. Applying feature importance and reconstructing the RFR model based on the selected features only which entailed repeating the preprocessing steps of splitting and standardizing the data, retraining the RFR model and testing its performance on the testing subset of selected features. 
-    2. Removing an outlier from the target new cases per 100K, repeating the preprocessing steps, refitting and evaluating the RFR model. 
-    3. Removing features with sever collinearity as suggested by the above heatmap, repeating the preprocessing steps, refitting and evaluating the RFR model. 
-    4. Increasing the number of estimators (decision trees), retraining and testing the RFR model on the 16 features preprocessed in the first step. 
-    5. Applying the increased estimators on 13 features without collinear variables, retraining and testing the RFR model on the 13 features preprocessed in the thrid step of enhancements.  
+- Next, we applied a few steps to enhance the performance of the RFR: 
+    1. Applying feature importance and reconstructing the RFR model based on the selected features only, which entailed repeating the preprocessing steps of splitting and standardizing the data, retraining the RFR model, and testing its performance on the testing subset of selected features. 
+    2. Removing an outlier from the target new cases per 100K, repeating the preprocessing steps, and refitting and evaluating the RFR model. 
+    3. Removing features with severe collinearity as suggested by the above heatmap, repeating the preprocessing steps, and refitting and evaluating the RFR model. 
+    4. Increasing the number of estimators (decision trees), retraining, and testing the RFR model on the 16 features preprocessed in the first step. 
+    5. Applying the increased estimators on 13 features without collinear variables, retraining and testing the RFR model on the 13 features preprocessed in the third step of enhancements.  
     6. Using PCA technique to decrease data dimensions and applying it to all 16 features. Then, repeating the preprocessing steps, refitting and evaluating the RFR model. 
-    7. Using PCA technique to decrease data dimensions and applying it to only non-colinear features (13). Then, repeating the preprocessing steps, refitting and evaluating the RFR model.  
-    8. Expanding on the good test of removing outliers, we truncated the dataset back to the beginning of a severe spike in new cases per 100K at the 730 days mark, and created a new dataframe of the first 720 days into the pandemic (88,039 records, 150 countries). The split of the data was as follows: X_train shape: (66029, 16), X_test shape: (22010, 16), y_train shape: (66029,), y_test shape: (22010,). Then, we recreated an RFR model with same basic 16 features and model characteristics. 
-    9. After observing the results from the previous step we truncated the days even further down to 700 days only (84,848 records of 150 countries). The split of the data was as follows: X_train shape: (63636, 16), X_test shape: (21212, 16), y_train shape: (63636,), y_test shape: (21212,). Then, we recreated an RFR model with same basic 16 features and model characteristics
-    
-    
-    
-    
+    7. Using the PCA technique to decrease data dimensions and applying it to only non-colinear features (13). Then, repeating the preprocessing steps, refitting and evaluating the RFR model.  
+    8. Expanding on the test of removing outliers, we truncated the dataset back to the beginning of a severe spike in new cases per 100K at the 730 days mark and created a new data frame for the first 720 days into the pandemic (88,039 records, 150 countries). The split of the data was as follows: X_train shape: (66029, 16), X_test shape: (22010, 16), y_train shape: (66029,), y_test shape: (22010,). Then, we recreated an RFR model with the same basic 16 features and model characteristics. 
+    9. After observing the results from the previous step, we truncated the days even further down to 700 days only (84,848 records of 150 countries). The split of the data was as follows: X_train shape: (63636, 16), X_test shape: (21212, 16), y_train shape: (63636,), y_test shape: (21212,). Then, we recreated an RFR model with the same basic 16 features and model characteristics.   
     
 ## Results
-
-#### Data Processing and Features
+### Data Processing and Features
 - Dates:
     - The reporting date carries significant importance in the dataset because it conveys the state of the COVID-19 pandemic in each location compared to other locations at the same timescale of the health crisis. It may also highlight chronological relations between other variables in the dataset.
     - The first announcement of COVID-19 infections was on December 31st, 2019. The World Health Organization - China Country Office was informed of several cases of pneumonia of unknown etiology (unknown cause) detected in Wuhan, Hubei Province.
@@ -166,7 +160,7 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 - There were 15 locations with a population less than 500K, accounting for 5,688 records ranging between 6-630 records per location.
 - There were 12 locations with a population between 500K and 1 million, accounting for 6,525 records ranging from 51 to 732 records per location.
 -  There were 150 countries with a population of 1 million and above, accounting for 99,856 records ranging between 279-767 per location. 
-- The data subsets created based on time frames of the pandemic (700 days, 720 days) served as a concept proof of the changing nature of viral infectious diseases. 
+- The data subsets created based on time frames of the pandemic (700 days, 720 days) served as a proof of concept of the changing nature of viral infectious diseases. 
 
 - In the first phase of predictions, we focused on countries with a population of 1 million and above. These 150 countries have accounted for 99,856 records. 
 - Correlation is often used to determine a cause-and-effect relationship between two variables. However, correlation does not necessarily imply causation. Correlation heatmaps are a type of plot that visualize the strength of relationships between numerical variables. Correlation heatmaps can be used to find potential relationships between variables and to understand the strength of these relationships. 
@@ -175,18 +169,16 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 - Multicollinearity affects the coefficients and p-values, but it does not influence the predictions, precision of the predictions, and the goodness-of-fit statistics. Since our primary goal was to make predictions and did not need to understand the role of each independent variable, we did not see the need to reduce severe multicollinearity for the first prediction attempt.
 - We ran the Random Forest Regression model on all 16 features and got a prediction score of 77%. 
 - Rerunning the RFR model on selected features based on their importance to the prediction resulted in a lower testing score of 75%.
-- Removing an outlier from the targer new cases per 100K positively affected the performance of the RFR model, resulting in a R squared value of 0.808 and lower MSE of 457.205.
-- Although none the collinear featuers shown by the heatmap included the target feature of new cases per 100K, we chose to test their influence on the model and removed them from the features set. The features with high collinearity were: (total_vaccinations_per_100K, people_fully_vaccinated_per_100K), (life_expectancy, human_development_index), and (median_age, aged_65_older). So, we removed one of each set: people_fully_vaccinated_per_100K, human_development_index, median_age. Testing the RFR model on the reduced features (13) resulted in 77% as well. 
-- Furthermore, we increased the number of decision trees used in the RFR model on the preprocessed 16 features of the first run (of 77% score), and that increased the computational time of the regression and resulted in a testing score of -23%. 
-- Applying the increased estimators on 13 features without collinear variables did also consume a substantial computation time and resulted in a testing score of 77% as well. 
-- Using Princinpal Component Analysis on all 16 features and on non-collinear 13 features, with and without increasing the number of decision tress in the Random Forest was worse than other enhancement techniques and did not help the model for a better fit. That was evident in the negative R squared scores we got from both attempts. 
-- Truncating the records down to 720 days into the pandemic had a positive influence on the RFR model performance. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
-- Truncating the records down to 700 days into the pandemic had a positive influence on the RFR model performance. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
+- Removing an outlier from the target new cases per 100K positively affected the performance of the RFR model, resulting in an R squared value of 0.808 and a lower MSE of 457.205.
+- Although none of the collinear features shown by the heatmap included the target feature of new cases per 100K, we chose to test their influence on the model and removed them from the features set. The features with high collinearity were: (total_vaccinations_per_100K, people_fully_vaccinated_per_100K), (life_expectancy, human_development_index), and (median_age, aged_65_older). So, we removed one of each set: people_fully_vaccinated_per_100K, human_development_index, median_age. Testing the RFR model on the reduced features (13) resulted in 77% as well. 
+- Furthermore, we increased the number of decision trees used in the RFR model on the preprocessed 16 features of the first run (of 77% score), which increased the computational time of the regression and resulted in a testing score of -23%. 
+- Applying the increased estimators on 13 features without collinear variables also consumed a substantial computation time and resulted in a testing score of 77%. 
+- Using Principal Component Analysis on all 16 features and non-collinear 13 features, with and without increasing the number of decision trees in the Random Forest, was worse than other enhancement techniques and did not help the model for a better fit. That was evident in the negative R-squared scores we got from both attempts. 
+- Truncating the records down to 720 days into the pandemic positively influenced the performance of the RFR model. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
+- Truncating the records down to 700 days into the pandemic positively influenced the performance of the RFR model. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
 
-
-
-
-#### Model Selection: Random Forest vs. Deep Neural Network
+### Model Selection: Random Forest vs. Deep Neural Network
+#### Random Forest Regressor
 - Random Forest is a supervised ensemble learning model that combines decision trees to analyze input data.
 - Random Forest Regressors are a type of ensemble learning model that combines multiple smaller models into a more robust and accurate model.
     - Random forest models use several weak learner algorithms (decision trees) and combine their output to make a final regression decision.
@@ -194,13 +186,11 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - Random forest models have been a staple in machine learning algorithms for many years due to their robustness and scalability.
     - Both output and feature selection of random forest models are easy to interpret and can easily handle outliers and nonlinear data.
 
-- The Random Forest Regression model was able to predict the daily number of new COVID-19 cases per 100,000 people with 77% accuracy on the testing subset. <br>
-    |![Predictions vs Actual from 16 Features.](./Images/rfr_16_actual_pred.png)|
-    |-|
-    |![Predictions and Residual of Training & Testing Data from 16 Features.](./Images/rfr_16_pred_residuals_train_test.png)| ![Predictions and Residuals of Whole Scaled Data from 16 Features.](./Images/rfr_16_pred_residuals_whole_scaled.png)|
-    |-|-|
-    |![Residuals of Predictions on Whole Scaled Data - 16 Features.](./Images/rfr_16_residuals_whole_scaled.png)|
-    |-|
+- The Random Forest Regression model predicted the daily number of new COVID-19 cases per 100,000 people with 77% accuracy on the testing subset. <br>
+    |![Predictions vs Actual from 16 Features.](./Images/rfr_16_actual_pred.png)|![Predictions and Residuals of Whole Scaled Data from 16 Features.](./Images/rfr_16_pred_residuals_whole_scaled.png)|
+    |-|-|    
+    |![Residuals of Predictions on Whole Scaled Data - 16 Features.](./Images/rfr_16_residuals_whole_scaled.png)|![Predictions and Residual of Training & Testing Data from 16 Features.](./Images/rfr_16_pred_residuals_train_test.png)| 
+   
 - Here is a sample of the Random Forest Regression prediction of new cases per 100K against the actual numbers. <br>
     |![Sample Predictions Against Actual New Cases - 16 Features.](./Images/rfr_16_sample_pred_scaled_data.png)|
     |-|
@@ -211,8 +201,9 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - mean squared error (MSE):  570.731
     - Root Mean Squared Error (RMSE):  23.890 <br>
 
-**Few steps were taken to enhnance the performance of the Random Forest Regression model, including:**
-1. Applying feature importance technique to eliminate certain variables that were not contributing greatly to the predictions. <br>
+**Few steps were taken to enhance the performance of the Random Forest Regression model, including:**
+1. Applying the feature importance technique to eliminate certain variables that were not contributing greatly to the predictions. <br>
+
     |![Feature Importance on RFR - 16 Features.](./Images/rfr_16_feature_importance.png)|
     |-|
     - The performance scores of the RFR model predictions based on feature importance were worse than the first run: 
@@ -225,32 +216,32 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     - mean absolute error (MAE):  4.710
     - mean squared error (MSE):  457.205
     - Root Mean Squared Error (RMSE):  21.382
-3. Reducing featuers to exclude ones with sever multi-collinearity did not change the performance of the RFR model significantly. 
+3. Reducing features to exclude ones with severe multicollinearity did not significantly change the RFR model's performance. 
     - R-squared (R2 ):  0.770
     - mean absolute error (MAE):  4.777
     - mean squared error (MSE):  568.454
     - Root Mean Squared Error (RMSE):  23.842
-4. Increasing the number of estimators/decision trees of the RFR model on 16 features badly influenced the model with a negative R sqaured score. A negative R2 is not a mathematical impossibility or the sign of a computer bug. It simply means that the chosen model (with its constraints) fits the data really poorly.
+4. Increasing the number of estimators/decision trees of the RFR model on 16 features negatively influenced the model with a negative R squared score. A negative R2 is not a mathematical impossibility or the sign of a computer bug. It simply means that the chosen model (with its constraints) fits the data poorly.
     - R-squared (R2 ): -0.235
     - mean absolute error (MAE):  23.307
     - mean squared error (MSE):  2972.592
     - Root Mean Squared Error (RMSE):  54.521
-5. Applying the increased estimators on 13 features without collinear variables did also consume a substantial computation time but slightly increased the performance of the model. 
+5. Applying the increased estimators on 13 features without collinear variables also consumed a substantial computation time but slightly increased the model's performance. 
     - R-squared (R2 ):  0.773
     - mean absolute error (MAE):  4.751
     - mean squared error (MSE):  560.722
     - Root Mean Squared Error (RMSE):  23.680
-6. Reducing data dimensions using Princinpal Component Analysis and recreating the RFR model on 16 features (including collinear features), affected the model negatively and was time consuming. 
+6. Reducing data dimensions using Principal Component Analysis and recreating the RFR model on 16 features (including collinear features) affected the model negatively and was time-consuming. 
     - R-squared (R2 ): -0.119
     - mean absolute error (MAE):  22.460
     - mean squared error (MSE):  2694.212
     - Root Mean Squared Error (RMSE):  51.906
-7. Reducing data dimensions using Princinpal Component Analysis and recreating the RFR model on 13 features (excluding collinear features), in addition to increasing the decision trees from 128 to 300 also affected the model negatively and was time consuming. 
+7. Reducing data dimensions using Principal Component Analysis and recreating the RFR model on 13 features (excluding collinear features), in addition to increasing the decision trees from 128 to 300, also affected the model negatively and was time-consuming. 
     - R-squared (R2 ): -0.613
     - mean absolute error (MAE):  24.216
     - mean squared error (MSE):  3883.128
     - Root Mean Squared Error (RMSE):  62.315
-8. Truncating covid days down to 720 days preceeding a new spike in cases decreased the errors in predictions signficantly. 
+8. Truncating covid days down to 720 days preceding a new spike in cases decreased the errors in predictions significantly. 
     - R-squared (R2 ):  0.774
     - mean absolute error (MAE):  2.672
     - mean squared error (MSE):  94.215
@@ -272,25 +263,77 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
     
     |![Predictions and Residuals of RFR on 700 days - training and testing- 16 Features](./Images/rfr_700d_16_pred_residuals_train_test.png)| ![Predictions and Residuals of RFR on 700 days - Whole Scaled- 16 Features](./Images/rfr_700d_16_pred_residuals_whole_scaled.png)|
     |-|-|
+    
+#### Deep Learning Neural Network
+1. The basic Neural Network had 187 parameters and ReLu activation function through hidden and output layers.
+    - It was trained on all 16 features using 100 epochs. <br>
+        |![Structure of a Basic Deep Learning NN on 16 Features.](./Images/nn_16_basic_structure.png)|
+        |-|
+    - Testing scores were as follows: 
+        - Mean squared error from the neural net:  1145.80322265625
+        - Mean absolute error from neural net:  11.782356262207031 <br>
+        |![Training and Testing Loss for Basic NN - 16 Features.](./Images/nn_16_basic_loss.png)|![Training and Testing MAE for Basic NN - 16 Features.](./Images/nn_16_basic_mae.png)|
+        |-|-| 
+    
+2. The optimized Neural Network had 2,417 parameters and ReLu activation function through hidden and output layers.
+    - It was trained on all 16 features using 100 epochs. <br>
+        |![Structure of an Optimized Deep Learning NN on 16 Features.](./Images/nn_16_optimized_Structure.png)|
+        |-|
+
+    - Testing scores were as follows: 
+        - Mean squared error from the neural net:  740.0748291015625
+        - Mean absolute error from neural net:  9.408642768859863 <br>
+        |![Training and Testing Loss for Optimized NN - 16 Features.](./Images/nn_16_optimized_loss.png)|![Training and Testing MAE for Optimized NN - 16 Features.](./Images/nn_16_optimized_mae.png)|
+        |-|-|       
+
+3. The enhanced Neural Network had 10,497 parameters and ReLu activation function through hidden and output layers.
+    - It was trained on all 16 features using 150 epochs. <br>
+        |![Structure of an Enhanced Deep Learning NN on 16 Features.](./Images/nn_16_enhanced_structure.png)|
+        |-|
+        
+    - Testing scores were as follows: 
+        - Mean squared error from the neural net:  622.7482299804688
+        - Mean absolute error from neural net:  7.698912143707275 <br>
+        |![Training and Testing Loss for Enhanced NN - 16 Features.](./Images/nn_16_enhanced_loss.png)|![Training and Testing MAE for Enhanced NN - 16 Features.](./Images/nn_16_enhanced_mae.png)|
+        |-|-|  
+    
+4. Reducing the number of features by removing the ones with severe multicollinearity. 
+    - This network had 10,113 parameters and ReLu activation function through hidden and output layers.
+    - It was trained on 13 features only using 150 epochs.
+        |![Structure of a Deep Learning NN on 13 Features.](./Images/nn_13_Structure.png)|
+        |-|
+    
+    - Testing scores were as follows:
+        - Mean squared error from the neural net:  626.8229370117188
+        - Mean absolute error from the neural net:  7.5756425857543945
+        |![Training and Testing Loss for NN - 13 Features.](./Images/nn_13_loss.png)|![Training and Testing MAE for NN - 13 Features.](./Images/nn_13_mae.png)|
+        |-|-|       
+<br>
+We were not able to export the predictions of the whole scaled dataset into a data frame in any of the four previous neural networks due to the following error: 
+**MemoryError: Unable to allocate 74.3 GiB for an array with shape (99856, 99856) and data type float64**
 
 ## Visualizations
 Used Tableau to make representations of the cleaned cases_pred data set.
-- This included a heat map of the total cases per 100K allong with various graphs of the total cases per 100K, new cases per 100K, reproduction rate, total vaccinations per 100K and daily vaccinations per 100K to show the feature importance.  
-- Then new cases per 100K was ploted against new cases per 100K predictions to see how the predicted data did comparied to the actual data.  
-- Because of a spike in the data two more graphs were made with the model using truncated date, one going from the original 817 covid days to 725 covid days and the other going to 700 covid days.  
-- Lastly a heat maps were made comparing the predicted and actual values of the new cases per 100K.<br>
-Included tableau work book. [COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/COVIDStory?publish=yes)
+- This included a heat map of the total cases per 100K along with various graphs of the total cases per 100K, new cases per 100K, reproduction rate, total vaccinations per 100K, and daily vaccinations per 100K to show the feature importance.  
+- Then, new cases per 100K were plotted against new cases per 100K predictions to see how the predicted data compared to the actual data.  
+- Because of a spike in the data, two more graphs were made with the model using truncated dates, one going from the original 817 covid days to 725 covid days and the other going to 700 covid days.  
+- Lastly, heat maps were made comparing the predicted and actual values of the new cases per 100K.<br>
+Included tableau workbook. [COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/COVIDStory?publish=yes)
 
 ## COVID-19 Analysis Summary
-1. We were able to predict the daily number of new COVID-19 cases in 150 countries across the world using Random Forest Regression models with ranging accuracy from 77% to 81%. 
-2. We attempted different techniques to enhance the model including selecting features based on importance, dropping features with severe multicollinearity, increasing the number of decision trees, and reducing the dimension of the data using Principal Component Analysis. 
+1. We were able to predict the daily number of new COVID-19 cases in 150 countries worldwide using Random Forest Regression models with ranging accuracy from 77% to 81%. 
+2. We attempted different techniques to enhance the model, including selecting features based on importance, dropping features with severe multicollinearity, increasing the number of decision trees, and reducing the data dimensions using Principal Component Analysis. 
 3. Not all enhancement techniques were beneficial. 
-4. Changing the time frame of the analysis and escaping new spikes in the pandemic had steady positive effects on predictions. Insinuating the changing nature of the pandemic due to the rise of new COVID-19 variants that were not accounted for in the original dataset. 
-5. The change in the nature of the virus with every new wave might have confused the model that depended on steady factors like protective public health measures including vaccinations. 
-6. At the beginning of the pandemic, the vaccinations were directed as neutralizing immunity against the virus which showed on the prediction pattern of new cases. However, later on in the course of the pandemic and as new variants of COVID-19 emerged, the effects of the vaccinations might have been diluted. 
-7. Deep Learning Neural Networks were very computationally expensive and did not provide superiority to Random Forest Regression models. 
-8. There were severe limitations to the dataset, including but not limited to huge gaps in reporting between locations, inconsistent calculations, and absent important informations such as public adherence to protective measures. 
-9. Further analysis is recommended on separate countries to further evaluate the weaknesses of the collective dataset. 
+4. Changing the time frame of the analysis and escaping new spikes in the pandemic had steady positive effects on predictions. In addition, it insinuates the changing nature of the pandemic due to the rise of new COVID-19 variants that were not accounted for in the original dataset. 
+5. The virus change with every new wave might have confused the model that depended on steady factors like protective public health measures, including vaccinations. 
+6. At the beginning of the pandemic, vaccinations were staged as neutralizing immunity against the virus, which showed in the prediction pattern of new cases. However, later in the pandemic, as new COVID-19 variants emerged, the effects of the vaccinations might have been diluted. 
+7. Deep Learning Neural Networks were computationally expensive, although they significantly decreased the mean absolute error from the Random Forest models. Furthermore, we could not export the prediction results to the original dataset due to memory limitations. 
+8. There were severe limitations to the dataset, including but not limited to considerable gaps in reporting between locations, inconsistent calculations, and missing vital pieces of information such as public adherence to protective measures. 
+9. Further analysis is recommended on separate countries to evaluate the collective dataset's weaknesses. 
+
+[The Complete Analysis PowerPoint](https://github.com/Magzzie/COVID-19_Analysis/blob/main/COVID-19%20Analysis.pptx)
+
 
 [The Complete Analysis PowerPoint](https://github.com/Magzzie/COVID-19_Analysis/blob/main/COVID-19%20Analysis.pptx)
 ---
+

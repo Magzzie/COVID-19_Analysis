@@ -203,6 +203,7 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 
 **Few steps were taken to enhance the performance of the Random Forest Regression model, including:**
 1. Applying the feature importance technique to eliminate certain variables that were not contributing greatly to the predictions. <br>
+
     |![Feature Importance on RFR - 16 Features.](./Images/rfr_16_feature_importance.png)|
     |-|
     - The performance scores of the RFR model predictions based on feature importance were worse than the first run: 
@@ -319,7 +320,6 @@ Used Tableau to make representations of the cleaned cases_pred data set.
 - Lastly, heat maps were made comparing the predicted and actual values of the new cases per 100K.<br>
 Included tableau workbook. [COVID-19 Analysis Dashboard](https://public.tableau.com/app/profile/richard.hamilton2558/viz/VIZ_16587125850040/COVIDStory?publish=yes)
 
-
 ## COVID-19 Analysis Summary
 1. We were able to predict the daily number of new COVID-19 cases in 150 countries worldwide using Random Forest Regression models with ranging accuracy from 77% to 81%. 
 2. We attempted different techniques to enhance the model, including selecting features based on importance, dropping features with severe multicollinearity, increasing the number of decision trees, and reducing the data dimensions using Principal Component Analysis. 
@@ -334,5 +334,6 @@ Included tableau workbook. [COVID-19 Analysis Dashboard](https://public.tableau.
 [The Complete Analysis PowerPoint](https://github.com/Magzzie/COVID-19_Analysis/blob/main/COVID-19%20Analysis.pptx)
 
 
+[The Complete Analysis PowerPoint](https://github.com/Magzzie/COVID-19_Analysis/blob/main/COVID-19%20Analysis.pptx)
 ---
 

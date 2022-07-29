@@ -287,6 +287,7 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
         |![Training and Testing Loss for Optimized NN - 16 Features.](./Images/nn_16_optimized_loss.png)|![Training and Testing MAE for Optimized NN - 16 Features.](./Images/nn_16_optimized_mae.png)|
         |-|-|       
 
+<<<<<<< HEAD
 3. The enhanced Neural Network had 10,497 parameters and ReLu activation function through hidden and output layers.
     - It was trained on all 16 features using 150 epochs. <br>
         |![Structure of an Enhanced Deep Learning NN on 16 Features.](./Images/nn_16_enhanced_structure.png)|
@@ -312,6 +313,8 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 <br>
 We were not able to export the predictions of the whole scaled dataset into a data frame in any of the four previous neural networks due to the following error: 
 **MemoryError: Unable to allocate 74.3 GiB for an array with shape (99856, 99856) and data type float64**
+=======
+>>>>>>> 57d82385f01ab4ca831246cce97afcb289064e14
 
 ## Visualizations
 Used Tableau to make representations of the cleaned cases_pred data set.
@@ -323,6 +326,7 @@ Included tableau workbook. [COVID-19 Analysis Dashboard](https://public.tableau.
 
 
 ## COVID-19 Analysis Summary
+<<<<<<< HEAD
 1. We were able to predict the daily number of new COVID-19 cases in 150 countries worldwide using Random Forest Regression models with ranging accuracy from 77% to 81%. 
 2. We attempted different techniques to enhance the model, including selecting features based on importance, dropping features with severe multicollinearity, increasing the number of decision trees, and reducing the data dimensions using Principal Component Analysis. 
 3. Not all enhancement techniques were beneficial. 
@@ -338,3 +342,16 @@ Included tableau workbook. [COVID-19 Analysis Dashboard](https://public.tableau.
 
 ---
 
+=======
+1. We were able to predict the daily number of new COVID-19 cases in 150 countries across the world using Random Forest Regression models with ranging accuracy from 77% to 81%. 
+2. We attempted different techniques to enhance the model including selecting features based on importance, dropping features with severe multicollinearity, increasing the number of decision trees, and reducing the dimension of the data using Principal Component Analysis. 
+3. Not all enhancement techniques were beneficial. 
+4. Changing the time frame of the analysis and escaping new spikes in the pandemic had steady positive effects on predictions. Insinuating the changing nature of the pandemic due to the rise of new COVID-19 variants that were not accounted for in the original dataset. 
+5. The change in the nature of the virus with every new wave might have confused the model that depended on steady factors like protective public health measures including vaccinations. 
+6. At the beginning of the pandemic, the vaccinations were directed as neutralizing immunity against the virus which showed on the prediction pattern of new cases. However, later on in the course of the pandemic and as new variants of COVID-19 emerged, the effects of the vaccinations might have been diluted. 
+7. Deep Learning Neural Networks were very computationally expensive and did not provide superiority to Random Forest Regression models. 
+8. There were severe limitations to the dataset, including but not limited to huge gaps in reporting between locations, inconsistent calculations, and absent important informations such as public adherence to protective measures. 
+9. Further analysis is recommended on separate countries to further evaluate the weaknesses of the collective dataset. 
+
+---
+>>>>>>> 57d82385f01ab4ca831246cce97afcb289064e14

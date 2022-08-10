@@ -1,5 +1,5 @@
 # COVID-19 Analysis
-In this project, we aim to develop a machine learning linear regression model and deep learning neural network to predict new COVID-19 cases worldwide using OWID open-source pandemic dataset. 
+Developing a machine learning linear regression model and deep learning neural network to predict new COVID-19 cases worldwide using OWID open-source pandemic dataset. 
 
 ## COVID-19 Overview
 #### As COVID-19 persists throughout the globe, we intend to explore and determine the relationships between different factors that contribute to the spread of COVID-19 and its outcomes noted by people worldwide. The goal of analyzing these health outcomes is ultimately to predict the health outcomes in future populations based on the factors determined significantly by the machine learning model utilized below. 

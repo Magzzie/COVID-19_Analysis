@@ -1,4 +1,5 @@
 # COVID-19 Analysis
+In this project, we aim to develop a machine learning linear regression model and deep learning neural network to predict new COVID-19 cases worldwide using OWID open-source pandemic dataset. 
 
 ## COVID-19 Overview
 #### As COVID-19 persists throughout the globe, we intend to explore and determine the relationships between different factors that contribute to the spread of COVID-19 and its outcomes noted by people worldwide. The goal of analyzing these health outcomes is ultimately to predict the health outcomes in future populations based on the factors determined significantly by the machine learning model utilized below. 
@@ -147,7 +148,7 @@ The raw data was loaded from the SQL database into a DataFrame in Jupyter Notebo
 ### Data Processing and Features
 - Dates:
     - The reporting date carries significant importance in the dataset because it conveys the state of the COVID-19 pandemic in each location compared to other locations at the same timescale of the health crisis. It may also highlight chronological relations between other variables in the dataset.
-    - The first announcement of COVID-19 infections was on December 31st, 2019. The World Health Organization - China Country Office was informed of several cases of pneumonia of unknown etiology (unknown cause) detected in Wuhan, Hubei Province.
+    - The first announcement of COVID-19 infections was on December 31st, 2019. Specifically, The World Health Organization - China Country Office was informed of several cases of pneumonia of unknown etiology (unknown cause) detected in Wuhan, Hubei Province.
     - The OneWorldInData COVID-19 data entry started on January 1st, 2020, and has been daily updated till July 4th, 2022, when we pulled the dataset from the OWID/COVID-19-data GitHub repository.
     - Although COVID-19 infections did not appear in all locations simultaneously, comparing the pandemic status across locations at the same timescale is essential. 
 	- Therefore, we created a new column of days into the pandemic, starting from January 1st, 2020, which is the first report in the dataset, till the date of each record. 
@@ -176,11 +177,11 @@ However, due to inconsistencies in vaccination reporting after March 29th, 2022,
 - Using Principal Component Analysis on all 16 features and non-collinear 13 features, with and without increasing the number of decision trees in the Random Forest, was worse than other enhancement techniques and did not help the model for a better fit. That was evident in the negative R-squared scores we got from both attempts. 
 - Truncating the records down to 720 days into the pandemic positively influenced the performance of the RFR model. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
 - Truncating the records down to 700 days into the pandemic positively influenced the performance of the RFR model. While the R squared score remained at 77.4%, the mean squared error dropped significantly. 
-- The Deep Learning Neural Networks created for the predictions of new cases per 100K decreased the error of predictions significantly. For example, the mean absolute error (MAE) ranged down from 11.9 to 7.6 in four optimization attempts. However, the required computational resources were much higher than our domestic capacities to extract the predictions. 
+- The Deep Learning Neural Networks created for the predictions of new cases per 100K decreased the error of predictions significantly. For example, the mean absolute error (MAE) ranged from 11.9 to 7.6 in four optimization attempts. However, the required computational resources were much higher than our domestic capacities to extract the predictions. 
 ### Model Selection: Random Forest vs. Deep Neural Network
 #### Random Forest Regressor
 - Random Forest is a supervised ensemble learning model that combines decision trees to analyze input data.
-- Random Forest Regressors are a type of ensemble learning model that combines multiple smaller models into a more robust and accurate model.
+- Random Forest Regressor is an ensemble learning model that combines multiple smaller models into a more robust and accurate model.
     - Random forest models use several weak learner algorithms (decision trees) and combine their output to make a final regression decision.
     - Structurally speaking, random forest models are very similar to their neural network counterparts.
     - Random forest models have been a staple in machine learning algorithms for many years due to their robustness and scalability.
